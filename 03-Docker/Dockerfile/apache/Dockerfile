@@ -10,6 +10,11 @@ RUN apt-get update
 # Install Apache Package
 RUN apt-get install apache2 -y
 
+# Copy Index Page
+COPY info.html /var/www/html/info.html
 
 # Run Apache Service
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
+
+
