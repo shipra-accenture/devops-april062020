@@ -1,0 +1,47 @@
+---
+
+# Update1: Deploy Index Web Page
+# Update2: Deploy Info Template Web Page
+# Update3: Smart Playbook with When Candation.
+# Update4: Local Varibales in playbook & Templates
+
+
+- hosts: mysrv
+  name: My Apache Server Installation
+  become: yes 
+
+  vars:
+    doc_root: "/var/www/html"
+    username: "Shipra Bhardwaj" 
+
+  tasks:
+  - name: Install Apache Packages
+    apt: name=apache2 state=present
+
+  - name: Start Apache Service
+    service: name=apache2 state=started
+
+  - name: Install http Packages on CentOS
+    yum: name=httpd state=present
+    when: ansible_os_family == "RedHat"
+
+  - name: Start http Service on CentOS
+    service: name=httpd state=started
+    when: ansible_os_family == "RedHat"
+
+  - name: Deploy Index Page
+    copy: src=templates/index.html dest={{doc_root}}/index.html
+ 
+  - name: Deploy Info Template Page
+    template: src=templates/info.j2 dest={{doc_root}}/info.html
+  
+  - name: Start Tomcat
+    command: /opt/tomcat/bin/catalina.sh start
+     
+- hosts: db
+  name: Getting Ready with Git Client
+  become: yes 
+
+  tasks:
+  - name: Install GIT Packages
+    apt: name=git state=present

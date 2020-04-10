@@ -1,0 +1,10 @@
+---
+
+- name: Create Couple of Common Users
+  user: name={{item}}  password="$6$HFD4G8wo$wQsYrSORJFbK1i6P7qCfYmX.fe/9IidZ4Nr8bO8EaIIXl8TD2oNm3qrNSOvUFt811SNVzAvJWu/8EB3ZUcMBL."
+
+  with_items:
+    - amit
+    - vashist
+    - tomcat
+    - nagios
